@@ -1,0 +1,40 @@
+API URL Example:
+https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip=11222&fields=group_photo&page=20&offset=0&key={YOUR_KEY}
+
+Recommended to use Zip Code as location.
+
+Request URL Example (11364):
+https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip=11364&page=20
+
+Signed URL Example (11364):
+https://api.meetup.com/2/open_events?zip=11364&and_text=False&offset=0&format=json&limited_events=False&photo-host=public&page=20&radius=25.0&desc=False&status=upcoming&sig_id=220716156&sig=c6a4358dbaad8f5f2b3ca49d4c2adca4de33d98f
+
+Example 1 "result" (out of 20):
+    {
+      "utc_offset": -14400000,
+      "headcount": 0,
+      "distance": 21.551820755004883,
+      "visibility": "public",
+      "waitlist_count": 0,
+      "created": 1485544135000,
+      "maybe_rsvp_count": 0,
+      "description": "<p>SAVE THE DATE! Our annual Rebuilding Day will be held on Saturday, April 22, 2017.<\/p> <p><br\/><a href=\"https:\/\/scontent.fsnc1-2.fna.fbcdn.net\/v\/t1.0-9\/14232495_1104937132916869_1581531535366227215_n.jpg?oh=96ddcc394d1ba919c0f794c9b3516deb&amp;oe=591F5D32\" class=\"linkified\">https:\/\/scontent.fsnc1-2.fna.fbcdn.net\/v\/t1.0-9\/14232495_1104937132916869_1581531535366227215_n.jpg?oh=96ddcc394d1ba919c0f794c9b3516deb&amp;oe=591F5D32<\/a><\/p> <p>The day will include volunteers to help update kitchens, fix bathroom leaks, apply a fresh coat of paint, secure handrails and make other improvements to address health and safety.<\/p> <p>More information to be sent soon. If you or someone you know is interested in receiving an application, you can call our voicemail at[masked] to leave a message with a name, phone number and mailing address or email [masked].<\/p>",
+      "event_url": "https:\/\/www.meetup.com\/DoWhatYouLove-North-Jersey\/events\/237249360\/",
+      "yes_rsvp_count": 4,
+      "duration": 43200000,
+      "name": "Rebuilding Day Jersey City 2017",
+      "id": "237249360",
+      "time": 1492858800000,
+      "updated": 1485710033000,
+      "group": {
+        "join_mode": "approval",
+        "created": 1461787613000,
+        "name": "North Jersey Singles Meetup Group",
+        "group_lon": -74.16999816894531,
+        "id": 19890474,
+        "urlname": "DoWhatYouLove-North-Jersey",
+        "group_lat": 40.72999954223633,
+        "who": "Cool Singles"
+      },
+      "status": "upcoming"
+    }

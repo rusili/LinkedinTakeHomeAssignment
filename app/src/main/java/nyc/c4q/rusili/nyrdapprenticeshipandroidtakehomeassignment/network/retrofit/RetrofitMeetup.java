@@ -2,12 +2,8 @@ package nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.network.retro
 
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import nyc.c4q.rusili.grantme.network.pojo.CourseFilter;
-import nyc.c4q.rusili.grantme.network.pojo.JSONCourses;
-import nyc.c4q.rusili.grantme.recyclerview.CourseAdapter;
+import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.network.models.InitialResponse;
+import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,72 +11,31 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitMeetup {
-    //https://data.cityofnewyork.us/resource/5teq-yyit.json
+    //https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip=11222&fields=group_photo&page=20&offset=0&key=68627c731f3c13f4d1f2e42172710
 
-    private CourseAdapter mCourseAdapter;
-    private int mViewId;
-    private int mPosition;
-    private String mFragId;
-
-    public RetrofitMeetup (CourseAdapter adapter, final String fragId, final int position) {
-        this.mCourseAdapter = adapter;
-        this.mFragId = fragId;
-        this.mPosition = position;
+    public RetrofitMeetup () {
     }
 
-    public void connect () {
-        RetrofitMeetup retrofitMeetup = new RetrofitMeetup.Builder()
-                .baseUrl("https://data.cityofnewyork.us/")
+    public void getEvents () {
+        Retrofit retrofitMeetup = new Retrofit.Builder()
+                .baseUrl(Constants.Network.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         ServiceMeetup service = retrofitMeetup.create(ServiceMeetup.class);
-        Call <List <JSONCourses>> getStuff = service.getCourses();
-        getStuff.enqueue(new Callback <List <JSONCourses>>() {
+        Call <InitialResponse> getInitialResponse = service.getResponse();
+        getInitialResponse.enqueue(new Callback <InitialResponse>() {
             @Override
-            public void onResponse (Call <List <JSONCourses>> call, Response <List <JSONCourses>> response) {
+            public void onResponse (Call <InitialResponse> call, Response <InitialResponse> response) {
                 if (response.isSuccessful()) {
-
-                    List <JSONCourses> jsonCourses = response.body();
-
-                    CourseFilter courseFilter = new CourseFilter(jsonCourses);
-
-                    mCourseAdapter.setListofCourses(courseFilter.filterList(mPosition, mFragId));
-                    Log.d("It's working", jsonCourses.get(2).getCourseName());
+                    Log.d("onResponse: ", "Successful");
                 }
             }
 
             @Override
-            public void onFailure (Call <List <JSONCourses>> call, Throwable t) {
+            public void onFailure (Call <InitialResponse> call, Throwable t) {
                 Log.d("onFailure: ", t.toString());
-                Log.d("It's not working", "It's not working");
             }
         });
-    }
-
-    public List <JSONCourses> borougthList (List <JSONCourses> inputList, int viewId) {
-        String borough = "";
-        List <JSONCourses> output = new ArrayList <>();
-
-//        switch (viewId){
-//            case R.id.brooklyn:
-//                borough="Brooklyn";
-//
-//            break;
-//            case R.id.queens:
-//                borough="Queens";
-//            break;
-//            case R.id.bronx:
-//                borough="Bronx";
-//            break;
-//        }
-        for (JSONCourses item : inputList) {
-            if (item.getBorough() != null) {
-                if (item.getBorough().equalsIgnoreCase(borough)) {
-                    output.add(item);
-                }
-            }
-        }
-        return output;
     }
 }

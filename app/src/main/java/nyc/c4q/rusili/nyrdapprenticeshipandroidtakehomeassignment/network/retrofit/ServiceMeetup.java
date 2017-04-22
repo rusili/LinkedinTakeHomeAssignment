@@ -1,13 +1,11 @@
 package nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.network.retrofit;
 
-import java.util.List;
-
-import nyc.c4q.rusili.grantme.network.pojo.JSONCourses;
+import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.network.models.InitialResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface ServiceMeetup {
 
-    @GET ("/resource/5teq-yyit.json")
-    Call <List <JSONCourses>> getCourses ();
+    @GET ("/2/open_events?&sign=true&photo-host=public&zip=11222&fields=group_photo&page=20&offset=0&key=68627c731f3c13f4d1f2e42172710.json")
+    Call <InitialResponse> getResponse ();
 }
