@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.Calendar;
 
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.R;
@@ -38,6 +40,16 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder {
 
     public void bind (Result result) {
         textViewName.setText(result.getName());
+
+        if (result.getGroup().getGroup_photo() != null) {
+            String urlThumb = result.getGroup().getGroup_photo().getPhoto_link();
+
+            Glide.with(mView.getContext())
+                    .load(urlThumb)
+                    .fitCenter()
+                    .placeholder(R.drawable.ic_image_black_24dp)
+                    .into(imageViewGroupPhoto);
+        }
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(result.getTime());

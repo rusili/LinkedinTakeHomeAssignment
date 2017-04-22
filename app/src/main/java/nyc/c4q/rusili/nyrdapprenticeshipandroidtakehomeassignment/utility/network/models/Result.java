@@ -26,6 +26,10 @@ public class Result {
     public class Group{
         public GroupPhoto group_photo;
 
+        public GroupPhoto getGroup_photo () {
+            return group_photo;
+        }
+
         public class GroupPhoto{
             String highres_link;
             String photo_link;
