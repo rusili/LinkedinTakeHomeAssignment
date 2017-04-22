@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="#FFFFFF"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,18 +15,24 @@
         <TextView
             android:id="@+id/fragment_detailview_textview_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="50dp"
+            android:text="Yo"
+            />
         <TextView
             android:id="@+id/fragment_detailview_textview_timevenue"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="50dp"
+            android:text="Yo2"
+            />
 
     </LinearLayout>
 
     <ImageView
         android:id="@+id/fragment_detailview_imageview_groupphoto"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="200dp"
+        android:background="@color/colorAccent"
+        />
 
     <WebView
         android:id="@+id/fragment_detailview_webview_description"
