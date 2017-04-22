@@ -1,8 +1,8 @@
-package nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.network.retrofit;
+package nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.retrofit;
 
 import android.util.Log;
 
-import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.network.models.InitialResponse;
+import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.InitialResponse;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +29,8 @@ public class RetrofitMeetup {
             public void onResponse (Call <InitialResponse> call, Response <InitialResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d("onResponse: ", "Successful");
+                    InitialResponse initialResponse = response.body();
+                    Log.d("onResponse: ", initialResponse.getResult().get(0).getName().toString());
                 }
             }
 

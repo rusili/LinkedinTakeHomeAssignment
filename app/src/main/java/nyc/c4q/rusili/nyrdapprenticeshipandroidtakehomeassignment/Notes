@@ -38,3 +38,18 @@ Example 1 "result" (out of 20):
       },
       "status": "upcoming"
     }
+
+Fields:
+name
+group/group_photo/photo_link
+venue/city/name
+time (var date = new Date(milliseconds);
+description (WebView)
+
+Remember:
+Default GroupPhoto
+Default Location
+Default Date/Time
+
+Extra:
+Scrollable Detail info
