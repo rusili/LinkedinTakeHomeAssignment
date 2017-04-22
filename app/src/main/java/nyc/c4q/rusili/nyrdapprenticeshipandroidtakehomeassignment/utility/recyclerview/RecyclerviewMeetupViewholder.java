@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.R;
+import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.MillisecondsToDateTime;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.Result;
 
 public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder {
@@ -35,5 +38,11 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder {
 
     public void bind (Result result) {
         textViewName.setText(result.getName());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(result.getTime());
+        String date = MillisecondsToDateTime.getDate(calendar);
+
+        //textViewLocationDate.setText();
     }
 }
