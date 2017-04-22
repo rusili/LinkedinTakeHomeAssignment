@@ -39,8 +39,27 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder {
     }
 
     public void bind (Result result) {
-        textViewName.setText(result.getName());
+        setGroupPhoto(result);
+        String locationDate = getLocationDate(result);
 
+        textViewName.setText(result.getName());
+        textViewLocationDate.setText(locationDate);
+    }
+
+    private String getLocationDate (Result result) {
+        String location = "TBA";
+        if (result.getVenue() != null){
+            location = result.getVenue().getCity();
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(result.getTime());
+        String date = MillisecondsToDateTime.getDate(calendar);
+
+        return (location + ", " + date);
+    }
+
+    private void setGroupPhoto (Result result){
         if (result.getGroup().getGroup_photo() != null) {
             String urlThumb = result.getGroup().getGroup_photo().getPhoto_link();
 
@@ -50,11 +69,5 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder {
                     .placeholder(R.drawable.ic_image_black_24dp)
                     .into(imageViewGroupPhoto);
         }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(result.getTime());
-        String date = MillisecondsToDateTime.getDate(calendar);
-
-        //textViewLocationDate.setText();
     }
 }
