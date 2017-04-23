@@ -38,10 +38,13 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     public void onBackPressed () {
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.activitymain_container);
+        Fragment currentFragment = getSupportFragmentManager()
+                                        .findFragmentById(R.id.activitymain_container);
 
         if (currentFragment instanceof FragmentDetailView) {
-            getSupportFragmentManager().beginTransaction().remove(currentFragment).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .remove(currentFragment)
+                    .commit();
         } else {
             super.onBackPressed();
         }

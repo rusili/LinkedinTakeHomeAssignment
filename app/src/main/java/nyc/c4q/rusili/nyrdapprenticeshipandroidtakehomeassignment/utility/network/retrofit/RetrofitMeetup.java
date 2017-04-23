@@ -37,12 +37,13 @@ public class RetrofitMeetup {
             public void onResponse (Call <InitialResponse> call, Response <InitialResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d("onResponse: ", "Successful");
+
                     InitialResponse initialResponse = response.body();
                     for (Result result: initialResponse.getResult()){
                         listofResults.add(result);
                     }
+
                     recyclerviewEvents.setAdapter(new RecyclerviewMeetupAdapter(listofResults));
-                    Log.d("onResponse: ", initialResponse.getResult().get(0).getName().toString());
                 }
             }
 

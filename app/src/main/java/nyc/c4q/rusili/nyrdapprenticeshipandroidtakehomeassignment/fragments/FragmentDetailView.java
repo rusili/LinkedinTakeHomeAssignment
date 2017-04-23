@@ -26,7 +26,10 @@ public class FragmentDetailView extends Fragment{
     private WebView webViewDescription;
 
     private Result result;
-    private Result webView;
+
+    public void giveResult(Result resultParam){
+        this.result = resultParam;
+    }
 
     @Nullable
     @Override
@@ -48,29 +51,12 @@ public class FragmentDetailView extends Fragment{
         webViewDescription = (WebView) view.findViewById(R.id.fragment_detailview_webview_description);
     }
 
-    public void giveResult(Result resultParam){
-        this.result = resultParam;
-    }
-
     private void showResult (Result resultParam) {
         setGroupPhoto(resultParam);
         setWebView(resultParam);
         textViewEventName.setText(resultParam.getName());
         textViewTimeVenue.setText(getLocationDate(resultParam));
 
-    }
-
-    private String getLocationDate (Result result) {
-        String venue = "TBA";
-        if (result.getVenue() != null){
-            venue = result.getVenue().getName();
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(result.getTime());
-        String time = MillisecondsToDateTime.getTime(calendar);
-
-        return (time + ", " + venue);
     }
 
     private void setGroupPhoto (Result result){
@@ -85,8 +71,21 @@ public class FragmentDetailView extends Fragment{
         }
     }
 
-    public void setWebView (Result resultParam) {
+    private void setWebView (Result resultParam) {
         String description = resultParam.getDescription();
         webViewDescription.loadData(description, "text/html", null);
+    }
+
+    private String getLocationDate (Result result) {
+        String venue = "TBA";
+        if (result.getVenue() != null){
+            venue = result.getVenue().getName();
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(result.getTime());
+        String time = MillisecondsToDateTime.getTime(calendar);
+
+        return (time + ", " + venue);
     }
 }

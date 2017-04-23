@@ -3,26 +3,24 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#FFFFFF"
+              android:background="@color/offwhite"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/fragment_detailview_header_height"
         android:orientation="vertical"
         >
 
         <TextView
             android:id="@+id/fragment_detailview_textview_name"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Yo"
+            android:layout_height="@dimen/viewholder_textview_primary_height"
             />
         <TextView
             android:id="@+id/fragment_detailview_textview_timevenue"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Yo2"
+            android:layout_height="@dimen/viewholder_textview_secondary_height"
             />
 
     </LinearLayout>
@@ -30,8 +28,7 @@
     <ImageView
         android:id="@+id/fragment_detailview_imageview_groupphoto"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/colorAccent"
+        android:layout_height="@dimen/fragment_detailview_imageview_height"
         />
 
     <WebView
