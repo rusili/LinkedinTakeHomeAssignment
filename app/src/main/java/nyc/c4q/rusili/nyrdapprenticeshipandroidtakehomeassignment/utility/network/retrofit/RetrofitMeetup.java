@@ -31,7 +31,7 @@ public class RetrofitMeetup {
                 .build();
 
         ServiceMeetup service = retrofitMeetup.create(ServiceMeetup.class);
-        Call <InitialResponse> getInitialResponse = service.getResponse();
+        Call <InitialResponse> getInitialResponse = service.getResponse(10036, Constants.Network.API_KEY);
         getInitialResponse.enqueue(new Callback <InitialResponse>() {
             @Override
             public void onResponse (Call <InitialResponse> call, Response <InitialResponse> response) {
