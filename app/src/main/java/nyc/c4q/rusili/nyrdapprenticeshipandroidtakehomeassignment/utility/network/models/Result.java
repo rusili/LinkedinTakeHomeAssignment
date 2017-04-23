@@ -54,13 +54,13 @@ public class Result {
     }
 
     public class Venue{
-        String address;
+        String address_1;
         String city;
         String name;
         String state;
 
         public String getAddress () {
-            return address;
+            return address_1;
         }
 
         public String getCity () {

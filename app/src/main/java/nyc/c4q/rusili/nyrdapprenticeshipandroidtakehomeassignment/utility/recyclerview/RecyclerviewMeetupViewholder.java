@@ -87,8 +87,12 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder{
             Glide.with(view.getContext())
                     .load(urlThumb)
                     .fitCenter()
-                    .placeholder(R.drawable.ic_image_black_24dp)
+                    .placeholder(R.drawable.ic_loop_black_24dp)
                     .into(imageViewGroupPhoto);
-        }
-    }
+        } else {
+            Glide.with(view.getContext())
+                    .load(R.drawable.ic_image_black_24dp)
+                    .fitCenter()
+                    .into(imageViewGroupPhoto);
+        }    }
 }

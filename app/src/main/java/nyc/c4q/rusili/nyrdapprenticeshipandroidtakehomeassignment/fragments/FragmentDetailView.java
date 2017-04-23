@@ -22,6 +22,7 @@ public class FragmentDetailView extends Fragment{
     private View view;
     private TextView textViewEventName;
     private TextView textViewTimeVenue;
+    private TextView textViewAddress;
     private ImageView imageViewGroupPhotoLarge;
     private WebView webViewDescription;
 
@@ -47,6 +48,7 @@ public class FragmentDetailView extends Fragment{
     private void setViews(){
         textViewEventName = (TextView) view.findViewById(R.id.fragment_detailview_textview_name);
         textViewTimeVenue = (TextView) view.findViewById(R.id.fragment_detailview_textview_timevenue);
+        textViewAddress = (TextView) view.findViewById(R.id.fragment_detailview_textview_address);
         imageViewGroupPhotoLarge = (ImageView) view.findViewById(R.id.fragment_detailview_imageview_groupphoto);
         webViewDescription = (WebView) view.findViewById(R.id.fragment_detailview_webview_description);
     }
@@ -55,8 +57,13 @@ public class FragmentDetailView extends Fragment{
         setGroupPhoto(resultParam);
         setWebView(resultParam);
         textViewEventName.setText(resultParam.getName());
-        textViewTimeVenue.setText(getLocationDate(resultParam));
-
+        if (result.getVenue() != null) {
+            textViewTimeVenue.setText(getLocationDate(resultParam));
+            textViewAddress.setText(resultParam.getVenue().getAddress());
+        } else {
+            textViewTimeVenue.setText("TBA");
+            textViewAddress.setText("TBA");
+        }
     }
 
     private void setGroupPhoto (Result result){
@@ -66,7 +73,12 @@ public class FragmentDetailView extends Fragment{
             Glide.with(getContext())
                     .load(urlThumb)
                     .fitCenter()
-                    .placeholder(R.drawable.ic_image_black_24dp)
+                    .placeholder(R.drawable.ic_loop_black_24dp)
+                    .into(imageViewGroupPhotoLarge);
+        } else {
+            Glide.with(getContext())
+                    .load(R.drawable.ic_image_black_24dp)
+                    .fitCenter()
                     .into(imageViewGroupPhotoLarge);
         }
     }

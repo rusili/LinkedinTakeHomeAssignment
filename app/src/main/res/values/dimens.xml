@@ -23,8 +23,6 @@
     <dimen name="fragment_detailview_imageview_height">150dp</dimen>
     <dimen name="fragment_detailview_padding">16dp</dimen>
     <dimen name="fragment_detailview_primary_fontsize">20sp</dimen>
-    <dimen name="fragment_detailview_secondary_fontsize">14dp</dimen>
-    <dimen name="fragment_detailview_textview_primary_height">64dp</dimen>
-    <dimen name="fragment_detailview_textview_secondary_height">32dp</dimen>
+    <dimen name="fragment_detailview_secondary_fontsize">14sp</dimen>
 
 </resources>
