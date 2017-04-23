@@ -10,7 +10,12 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.util.Calendar;
+
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.R;
+import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.MillisecondsToDateTime;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.Result;
 
 public class FragmentDetailView extends Fragment{
@@ -32,6 +37,7 @@ public class FragmentDetailView extends Fragment{
 
     private void initialize () {
         setViews();
+        showResult(result);
     }
 
     private void setViews(){
@@ -43,5 +49,37 @@ public class FragmentDetailView extends Fragment{
 
     public void giveResult(Result resultParam){
         this.result = resultParam;
+    }
+
+    private void showResult (Result resultParam) {
+        setGroupPhoto(resultParam);
+        textViewEventName.setText(resultParam.getName());
+        textViewTimeVenue.setText(getLocationDate(resultParam));
+
+    }
+
+    private String getLocationDate (Result result) {
+        String venue = "TBA";
+        if (result.getVenue() != null){
+            venue = result.getVenue().getName();
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(result.getTime());
+        String time = MillisecondsToDateTime.getTime(calendar);
+
+        return (time + ", " + venue);
+    }
+
+    private void setGroupPhoto (Result result){
+        if (result.getGroup().getGroup_photo() != null) {
+            String urlThumb = result.getGroup().getGroup_photo().getPhoto_link();
+
+            Glide.with(getContext())
+                    .load(urlThumb)
+                    .fitCenter()
+                    .placeholder(R.drawable.ic_image_black_24dp)
+                    .into(imageViewGroupPhotoLarge);
+        }
     }
 }
