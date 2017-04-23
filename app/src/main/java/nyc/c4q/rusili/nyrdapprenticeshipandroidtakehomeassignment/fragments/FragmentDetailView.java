@@ -26,6 +26,7 @@ public class FragmentDetailView extends Fragment{
     private WebView webViewDescription;
 
     private Result result;
+    private Result webView;
 
     @Nullable
     @Override
@@ -53,6 +54,7 @@ public class FragmentDetailView extends Fragment{
 
     private void showResult (Result resultParam) {
         setGroupPhoto(resultParam);
+        setWebView(resultParam);
         textViewEventName.setText(resultParam.getName());
         textViewTimeVenue.setText(getLocationDate(resultParam));
 
@@ -81,5 +83,10 @@ public class FragmentDetailView extends Fragment{
                     .placeholder(R.drawable.ic_image_black_24dp)
                     .into(imageViewGroupPhotoLarge);
         }
+    }
+
+    public void setWebView (Result resultParam) {
+        String description = resultParam.getDescription();
+        webViewDescription.loadData(description, "text/html", null);
     }
 }

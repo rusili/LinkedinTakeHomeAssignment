@@ -3,7 +3,7 @@ package nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.netwo
 public class Result {
     private String name;
     private long time;
-    //private String description;
+    private String description;
     private Group group;
     private Venue venue;
 
@@ -13,6 +13,10 @@ public class Result {
 
     public long getTime () {
         return time;
+    }
+
+    public String getDescription () {
+        return description;
     }
 
     public Group getGroup () {
