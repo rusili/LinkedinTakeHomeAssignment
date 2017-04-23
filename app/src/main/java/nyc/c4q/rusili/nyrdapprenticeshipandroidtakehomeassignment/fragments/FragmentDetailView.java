@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import java.util.Calendar;
 
@@ -26,10 +27,16 @@ public class FragmentDetailView extends Fragment{
     private ImageView imageViewGroupPhotoLarge;
     private WebView webViewDescription;
 
+    private Gson gsonConverter;
     private Result result;
 
-    public void giveResult(Result resultParam){
-        this.result = resultParam;
+    @Override
+    public void onCreate (@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        gsonConverter = new Gson();
+        Bundle bundle = this.getArguments();
+        String jsonString = bundle.getString("JSON");
+        result = gsonConverter.fromJson(jsonString, Result.class);
     }
 
     @Nullable
@@ -104,6 +111,6 @@ public class FragmentDetailView extends Fragment{
     @Override
     public void onSaveInstanceState (Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("Name", result.getName());
+        outState.putString("JSON", result.getName());
     }
 }

@@ -1,5 +1,6 @@
 package nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.recyclerview;
 
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import java.util.Calendar;
 
@@ -16,6 +18,8 @@ import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.networ
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.Result;
 
 public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder{
+    private Gson gsonConverter;
+
     private View view;
     private ImageView imageViewGroupPhoto;
     private TextView textViewName;
@@ -42,7 +46,11 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder{
     private void inflateFragmentDetail (View view) {
         AppCompatActivity appCompatActivity = (AppCompatActivity) view.getContext();
         FragmentDetailView fragmentDetailView = new FragmentDetailView();
-        fragmentDetailView.giveResult(result);
+        Bundle bundle = new Bundle();
+        gsonConverter = new Gson();
+        String stringJson = gsonConverter.toJson(result);
+        bundle.putString("JSON", stringJson);
+        fragmentDetailView.setArguments(bundle);
 
         appCompatActivity.getSupportFragmentManager()
                 .beginTransaction()

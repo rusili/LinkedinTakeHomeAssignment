@@ -24,7 +24,7 @@ import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.recycl
 
 public class ActivityMain extends AppCompatActivity {
     private RecyclerView recyclerviewEvents;
-    public InitialResponse initialResponse;
+    private InitialResponse initialResponse;
     private Gson gsonConverter;
 
     @Override
