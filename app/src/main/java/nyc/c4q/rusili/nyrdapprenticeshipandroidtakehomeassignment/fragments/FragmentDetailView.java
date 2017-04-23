@@ -100,4 +100,10 @@ public class FragmentDetailView extends Fragment{
 
         return (time + ", " + venue);
     }
+
+    @Override
+    public void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("Name", result.getName());
+    }
 }

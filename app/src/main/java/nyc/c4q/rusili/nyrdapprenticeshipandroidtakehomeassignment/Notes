@@ -52,6 +52,6 @@ Default Location
 Default Date/Time
 
 Extras:
-Retrofit interface configurable
-Event url intent
 check for cached information
+    Save json
+    Pull json onRotate

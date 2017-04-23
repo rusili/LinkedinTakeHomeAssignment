@@ -19,8 +19,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitMeetup {
     //https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip=11222&fields=group_photo&page=20&offset=0&key=68627c731f3c13f4d1f2e42172710
     private List<Result> listofResults;
+    private onResponseListener onResponseListener;
 
     public RetrofitMeetup () {}
+
+    public void GiveListener (onResponseListener onResponseListenerParam){
+        this.onResponseListener = onResponseListenerParam;
+    }
 
     public void getEvents (final RecyclerView recyclerviewEvents) {
         listofResults = new ArrayList <>();
@@ -44,6 +49,8 @@ public class RetrofitMeetup {
                     }
 
                     recyclerviewEvents.setAdapter(new RecyclerviewMeetupAdapter(listofResults));
+
+                    onResponseListener.giveInitialResponse(initialResponse);
                 }
             }
 
@@ -52,5 +59,9 @@ public class RetrofitMeetup {
                 Log.d("onFailure: ", t.toString());
             }
         });
+    }
+
+    public interface onResponseListener{
+        public void giveInitialResponse(InitialResponse initialResponse);
     }
 }

@@ -10,25 +10,53 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.R;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.fragments.FragmentDetailView;
+import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.InitialResponse;
+import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.Result;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.retrofit.RetrofitMeetup;
+import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.recyclerview.RecyclerviewMeetupAdapter;
 
 public class ActivityMain extends AppCompatActivity {
     private RecyclerView recyclerviewEvents;
+    public InitialResponse initialResponse;
+    private Gson gsonConverter;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initialize();
+        if (savedInstanceState == null) {
+            initialize();
+        } else {
+            setViews();
+            onResumeLoad(savedInstanceState);
+        }
+
     }
 
     private void initialize(){
         isConnectedToInternet();
         setViews();
         getMeetupInfo();
+    }
+
+    private void onResumeLoad (Bundle savedInstanceState){
+        setViews();
+        gsonConverter = new Gson();
+        String jsonString = savedInstanceState.getString("JSON");
+        initialResponse = gsonConverter.fromJson(jsonString, InitialResponse.class);
+        List<Result> listOfResults = new ArrayList <>();
+        for (Result result: initialResponse.getResult()){
+            listOfResults.add(result);
+        }
+        recyclerviewEvents.setAdapter(new RecyclerviewMeetupAdapter(listOfResults));
     }
 
     private void setViews(){
@@ -38,6 +66,12 @@ public class ActivityMain extends AppCompatActivity {
 
     private void getMeetupInfo (){
         RetrofitMeetup retrofitMeetup = new RetrofitMeetup();
+        retrofitMeetup.GiveListener(new RetrofitMeetup.onResponseListener() {
+            @Override
+            public void giveInitialResponse (InitialResponse initialResponseParam) {
+                initialResponse = initialResponseParam;
+            }
+        });
         retrofitMeetup.getEvents(recyclerviewEvents);
     }
 
@@ -63,5 +97,13 @@ public class ActivityMain extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        gsonConverter = new Gson();
+        String string = gsonConverter.toJson(initialResponse);
+        outState.putString("JSON", string);
+        super.onSaveInstanceState(outState);
     }
 }
