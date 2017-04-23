@@ -42,7 +42,7 @@
                     android:id="@+id/recyclerview_viewholder_event_textview_name"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/viewholder_textview_primary_height"
-                    android:textSize="@dimen/Primary_fontsize"
+                    android:textSize="@dimen/viewholder_primary_fontsize"
                     android:textColor="@color/Font_primary"
                     android:gravity="center_vertical"
                     />
@@ -50,7 +50,7 @@
                     android:id="@+id/recyclerview_viewholder_event_textview_locationdate"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/viewholder_textview_secondary_height"
-                    android:textSize="@dimen/Secondary_fontsize"
+                    android:textSize="@dimen/viewholder_secondary_fontsize"
                     android:textColor="@color/Font_secondary"
                     android:gravity="center_vertical"
                     />

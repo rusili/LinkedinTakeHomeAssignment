@@ -15,11 +15,16 @@
 
     <dimen name="viewholder_textview_primary_height">34dp</dimen>
     <dimen name="viewholder_textview_secondary_height">30dp</dimen>
-    <dimen name="Primary_fontsize">16sp</dimen>
-    <dimen name="Secondary_fontsize">14sp</dimen>
+    <dimen name="viewholder_primary_fontsize">16sp</dimen>
+    <dimen name="viewholder_secondary_fontsize">14sp</dimen>
 
     <!-- Fragment Detailview -->
     <dimen name="fragment_detailview_header_height">100dp</dimen>
     <dimen name="fragment_detailview_imageview_height">150dp</dimen>
+    <dimen name="fragment_detailview_padding">16dp</dimen>
+    <dimen name="fragment_detailview_primary_fontsize">20sp</dimen>
+    <dimen name="fragment_detailview_secondary_fontsize">14dp</dimen>
+    <dimen name="fragment_detailview_textview_primary_height">64dp</dimen>
+    <dimen name="fragment_detailview_textview_secondary_height">32dp</dimen>
 
 </resources>

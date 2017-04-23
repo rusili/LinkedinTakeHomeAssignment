@@ -4,6 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/offwhite"
+              android:padding="@dimen/fragment_detailview_padding"
     >
 
     <LinearLayout
@@ -15,12 +16,19 @@
         <TextView
             android:id="@+id/fragment_detailview_textview_name"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/viewholder_textview_primary_height"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/fragment_detailview_primary_fontsize"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/fragment_detailview_padding"
             />
         <TextView
             android:id="@+id/fragment_detailview_textview_timevenue"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/viewholder_textview_secondary_height"
+            android:layout_height="@dimen/fragment_detailview_textview_secondary_height"
+            android:textSize="@dimen/fragment_detailview_secondary_fontsize"
+            android:textAlignment="center"
+            android:layout_marginBottom="@dimen/fragment_detailview_padding"
             />
 
     </LinearLayout>
@@ -29,6 +37,7 @@
         android:id="@+id/fragment_detailview_imageview_groupphoto"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fragment_detailview_imageview_height"
+        android:layout_marginBottom="@dimen/fragment_detailview_padding"
         />
 
     <WebView
