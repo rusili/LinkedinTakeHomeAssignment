@@ -38,7 +38,6 @@ public class ActivityMain extends AppCompatActivity {
             setViews();
             onResumeLoad(savedInstanceState);
         }
-
     }
 
     private void initialize(){
@@ -50,7 +49,7 @@ public class ActivityMain extends AppCompatActivity {
     private void onResumeLoad (Bundle savedInstanceState){
         setViews();
         gsonConverter = new Gson();
-        String jsonString = savedInstanceState.getString("JSON");
+        String jsonString = savedInstanceState.getString("JSONResponse");
         initialResponse = gsonConverter.fromJson(jsonString, InitialResponse.class);
         List<Result> listOfResults = new ArrayList <>();
         for (Result result: initialResponse.getResult()){
@@ -103,7 +102,7 @@ public class ActivityMain extends AppCompatActivity {
     protected void onSaveInstanceState (Bundle outState) {
         gsonConverter = new Gson();
         String string = gsonConverter.toJson(initialResponse);
-        outState.putString("JSON", string);
+        outState.putString("JSONResponse", string);
         super.onSaveInstanceState(outState);
     }
 }

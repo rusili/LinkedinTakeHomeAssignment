@@ -49,7 +49,7 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder{
         Bundle bundle = new Bundle();
         gsonConverter = new Gson();
         String stringJson = gsonConverter.toJson(result);
-        bundle.putString("JSON", stringJson);
+        bundle.putString("JSONResult", stringJson);
         fragmentDetailView.setArguments(bundle);
 
         appCompatActivity.getSupportFragmentManager()

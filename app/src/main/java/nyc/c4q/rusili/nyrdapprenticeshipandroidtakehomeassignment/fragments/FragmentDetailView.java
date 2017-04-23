@@ -35,7 +35,7 @@ public class FragmentDetailView extends Fragment{
         super.onCreate(savedInstanceState);
         gsonConverter = new Gson();
         Bundle bundle = this.getArguments();
-        String jsonString = bundle.getString("JSON");
+        String jsonString = bundle.getString("JSONResult");
         result = gsonConverter.fromJson(jsonString, Result.class);
     }
 
@@ -111,6 +111,6 @@ public class FragmentDetailView extends Fragment{
     @Override
     public void onSaveInstanceState (Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("JSON", result.getName());
+        outState.putString("JSONResult", result.getName());
     }
 }
