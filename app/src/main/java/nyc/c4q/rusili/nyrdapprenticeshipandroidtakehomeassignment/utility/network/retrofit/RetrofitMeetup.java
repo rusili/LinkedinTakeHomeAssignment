@@ -9,7 +9,6 @@ import java.util.List;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.Constants;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.InitialResponse;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.Result;
-import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.recyclerview.RecyclerviewMeetupAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,13 +16,20 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitMeetup {
-    //https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip=11222&fields=group_photo&page=20&offset=0&key=68627c731f3c13f4d1f2e42172710
-    private List<Result> listofResults;
     private onResponseListener onResponseListener;
+    private List <Result> listofResults;
 
-    public RetrofitMeetup () {}
+    private static RetrofitMeetup instance = null;
+    protected RetrofitMeetup() {}
 
-    public void GiveListener (onResponseListener onResponseListenerParam){
+    public static RetrofitMeetup getInstance() {
+        if(instance == null) {
+            instance = new RetrofitMeetup();
+        }
+        return instance;
+    }
+
+    public void GiveListener (onResponseListener onResponseListenerParam) {
         this.onResponseListener = onResponseListenerParam;
     }
 
@@ -44,11 +50,11 @@ public class RetrofitMeetup {
                     Log.d("onResponse: ", "Successful");
 
                     InitialResponse initialResponse = response.body();
-                    for (Result result: initialResponse.getResult()){
+                    for (Result result : initialResponse.getResult()) {
                         listofResults.add(result);
                     }
 
-                    recyclerviewEvents.setAdapter(new RecyclerviewMeetupAdapter(listofResults));
+                    //recyclerviewEvents.setAdapter(new RecyclerviewMeetupAdapter(listofResults));
 
                     onResponseListener.giveInitialResponse(initialResponse);
                 }
@@ -61,7 +67,7 @@ public class RetrofitMeetup {
         });
     }
 
-    public interface onResponseListener{
-        public void giveInitialResponse(InitialResponse initialResponse);
+    public interface onResponseListener {
+        public void giveInitialResponse (InitialResponse initialResponse);
     }
 }

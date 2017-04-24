@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,9 +24,12 @@ import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.networ
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.recyclerview.RecyclerviewMeetupAdapter;
 
 public class ActivityMain extends AppCompatActivity {
-    private RecyclerView recyclerviewEvents;
-    private InitialResponse initialResponse;
+    private InitialResponse initialResponseSavedInstanceState;
     private Gson gsonConverter;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private RecyclerView recyclerviewEvents;
+    private RecyclerviewMeetupAdapter recyclerviewMeetupAdapter;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -40,46 +44,65 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    private void initialize(){
+    private void initialize () {
         isConnectedToInternet();
         setViews();
         getMeetupInfo();
     }
 
-    private void onResumeLoad (Bundle savedInstanceState){
+    private void onResumeLoad (Bundle savedInstanceState) {
         setViews();
         gsonConverter = new Gson();
         String jsonString = savedInstanceState.getString("JSONResponse");
-        initialResponse = gsonConverter.fromJson(jsonString, InitialResponse.class);
-        List<Result> listOfResults = new ArrayList <>();
-        for (Result result: initialResponse.getResult()){
-            listOfResults.add(result);
-        }
-        recyclerviewEvents.setAdapter(new RecyclerviewMeetupAdapter(listOfResults));
+        initialResponseSavedInstanceState = gsonConverter.fromJson(jsonString, InitialResponse.class);
+
+        setRecyclerviewMeetupAdapter(parseInitialResponse(initialResponseSavedInstanceState));
     }
 
-    private void setViews(){
+    private void setViews () {
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activitymain_recyclerview_swiperefreshlayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh () {
+                getMeetupInfo();
+            }
+        });
         recyclerviewEvents = (RecyclerView) findViewById(R.id.activitymain_recyclerview_events);
         recyclerviewEvents.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void getMeetupInfo (){
-        RetrofitMeetup retrofitMeetup = new RetrofitMeetup();
+    private void getMeetupInfo () {
+        RetrofitMeetup retrofitMeetup = RetrofitMeetup.getInstance();
         retrofitMeetup.GiveListener(new RetrofitMeetup.onResponseListener() {
             @Override
             public void giveInitialResponse (InitialResponse initialResponseParam) {
-                initialResponse = initialResponseParam;
+                initialResponseSavedInstanceState = initialResponseParam;
+                setRecyclerviewMeetupAdapter(parseInitialResponse(initialResponseParam));
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
         retrofitMeetup.getEvents(recyclerviewEvents);
     }
 
-    public void isConnectedToInternet() {
+    private List<Result> parseInitialResponse (InitialResponse initialResponseParam) {
+        List<Result> listOfResults = new ArrayList <>();
+
+        for (Result result : initialResponseParam.getResult()) {
+            listOfResults.add(result);
+        }
+        return  listOfResults;
+    }
+
+    private void setRecyclerviewMeetupAdapter(List<Result> listOfResultsParam){
+        recyclerviewEvents.setAdapter(new RecyclerviewMeetupAdapter(listOfResultsParam));
+    }
+
+    private void isConnectedToInternet () {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
-        if (activeNetwork == null){
+        if (activeNetwork == null) {
             Toast.makeText(this, "Connection Unavailable", Toast.LENGTH_SHORT).show();
         }
     }
@@ -87,7 +110,7 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     public void onBackPressed () {
         Fragment currentFragment = getSupportFragmentManager()
-                                        .findFragmentById(R.id.activitymain_container);
+                .findFragmentById(R.id.activitymain_container);
 
         if (currentFragment instanceof FragmentDetailView) {
             getSupportFragmentManager().beginTransaction()
@@ -101,7 +124,7 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState (Bundle outState) {
         gsonConverter = new Gson();
-        String string = gsonConverter.toJson(initialResponse);
+        String string = gsonConverter.toJson(initialResponseSavedInstanceState);
         outState.putString("JSONResponse", string);
         super.onSaveInstanceState(outState);
     }

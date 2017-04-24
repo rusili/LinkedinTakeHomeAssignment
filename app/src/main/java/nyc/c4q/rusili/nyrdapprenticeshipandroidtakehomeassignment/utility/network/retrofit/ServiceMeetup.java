@@ -8,5 +8,5 @@ import retrofit2.http.Query;
 public interface ServiceMeetup {
 
     @GET ("/2/open_events?&sign=true&photo-host=public&zip=11222&fields=group_photo&page=20&offset=0&key=")
-    Call <InitialResponse> getResponse (@Query("zip") int zipcodeParam, @Query ("key") String apikeyParam);
+    Call <InitialResponse> getResponse (@Query ("zip") int zipcodeParam, @Query ("key") String apikeyParam);
 }

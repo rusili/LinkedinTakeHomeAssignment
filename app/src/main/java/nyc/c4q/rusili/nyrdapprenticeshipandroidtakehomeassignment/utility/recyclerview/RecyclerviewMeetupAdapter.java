@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.R;
+import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.activities.RecyclerviewMeetupViewholder;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.Result;
 
 public class RecyclerviewMeetupAdapter extends RecyclerView.Adapter {
-    private List<Result> listofResults;
+    private List <Result> listofResults;
 
-    public RecyclerviewMeetupAdapter(List<Result> listParam){
+    public RecyclerviewMeetupAdapter (List <Result> listParam) {
         this.listofResults = listParam;
     }
 

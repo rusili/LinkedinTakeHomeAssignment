@@ -19,16 +19,16 @@ import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.R;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.MillisecondsToDateTime;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.Result;
 
-public class FragmentDetailView extends Fragment{
+public class FragmentDetailView extends Fragment {
+    private Gson gsonConverter;
+    private Result result;
+
     private View view;
     private TextView textViewEventName;
     private TextView textViewTimeVenue;
     private TextView textViewAddress;
     private ImageView imageViewGroupPhotoLarge;
     private WebView webViewDescription;
-
-    private Gson gsonConverter;
-    private Result result;
 
     @Override
     public void onCreate (@Nullable Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class FragmentDetailView extends Fragment{
         showResult(result);
     }
 
-    private void setViews(){
+    private void setViews () {
         textViewEventName = (TextView) view.findViewById(R.id.fragment_detailview_textview_name);
         textViewTimeVenue = (TextView) view.findViewById(R.id.fragment_detailview_textview_timevenue);
         textViewAddress = (TextView) view.findViewById(R.id.fragment_detailview_textview_address);
@@ -73,7 +73,7 @@ public class FragmentDetailView extends Fragment{
         }
     }
 
-    private void setGroupPhoto (Result result){
+    private void setGroupPhoto (Result result) {
         if (result.getGroup().getGroup_photo() != null) {
             String urlThumb = result.getGroup().getGroup_photo().getPhoto_link();
 
@@ -97,7 +97,7 @@ public class FragmentDetailView extends Fragment{
 
     private String getLocationDate (Result result) {
         String venue = "TBA";
-        if (result.getVenue() != null){
+        if (result.getVenue() != null) {
             venue = result.getVenue().getName();
         }
 

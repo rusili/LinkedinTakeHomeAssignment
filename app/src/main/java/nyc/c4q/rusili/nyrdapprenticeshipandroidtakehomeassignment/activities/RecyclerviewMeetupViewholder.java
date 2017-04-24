@@ -1,4 +1,4 @@
-package nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.recyclerview;
+package nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,15 +17,14 @@ import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.fragments.Frag
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.MillisecondsToDateTime;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.Result;
 
-public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder{
+public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder {
     private Gson gsonConverter;
+    private Result result;
 
     private View view;
     private ImageView imageViewGroupPhoto;
     private TextView textViewName;
     private TextView textViewLocationDate;
-
-    private Result result;
 
     public RecyclerviewMeetupViewholder (View viewParam) {
         super(viewParam);
@@ -77,7 +76,7 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder{
 
     private String getLocationDate (Result result) {
         String location = "TBA";
-        if (result.getVenue() != null){
+        if (result.getVenue() != null) {
             location = result.getVenue().getCity();
         }
 
@@ -88,7 +87,7 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder{
         return (location + ", " + date);
     }
 
-    private void setGroupPhoto (Result result){
+    private void setGroupPhoto (Result result) {
         if (result.getGroup().getGroup_photo() != null) {
             String urlThumb = result.getGroup().getGroup_photo().getPhoto_link();
 
@@ -102,5 +101,6 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder{
                     .load(R.drawable.ic_image_black_24dp)
                     .fitCenter()
                     .into(imageViewGroupPhoto);
-        }    }
+        }
+    }
 }

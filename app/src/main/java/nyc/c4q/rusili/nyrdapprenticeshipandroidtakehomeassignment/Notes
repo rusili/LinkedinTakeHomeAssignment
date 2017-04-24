@@ -45,13 +45,3 @@ group/group_photo/photo_link
 venue/city/name
 time (var date = new Date(milliseconds);
 description (WebView)
-
-Remember:
-Default GroupPhoto
-Default Location
-Default Date/Time
-
-Extras:
-check for cached information
-    Save json
-    Pull json onRotate
