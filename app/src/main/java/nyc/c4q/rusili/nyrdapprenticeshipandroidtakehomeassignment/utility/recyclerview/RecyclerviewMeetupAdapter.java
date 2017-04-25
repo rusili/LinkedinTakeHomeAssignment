@@ -13,9 +13,11 @@ import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.networ
 
 public class RecyclerviewMeetupAdapter extends RecyclerView.Adapter {
     private List <Result> listofResults;
+    private RecyclerviewMeetupViewholder.InflateFragmentListener inflateFragmentListener;
 
-    public RecyclerviewMeetupAdapter (List <Result> listParam) {
+    public RecyclerviewMeetupAdapter (List <Result> listParam, RecyclerviewMeetupViewholder.InflateFragmentListener inflateFragmentListenerParam) {
         this.listofResults = listParam;
+        inflateFragmentListener = inflateFragmentListenerParam;
     }
 
     @Override
@@ -30,6 +32,7 @@ public class RecyclerviewMeetupAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder (RecyclerView.ViewHolder holder, int position) {
         RecyclerviewMeetupViewholder recyclerviewViewHolder = (RecyclerviewMeetupViewholder) holder;
+        recyclerviewViewHolder.giveListener(inflateFragmentListener);
         recyclerviewViewHolder.bind(listofResults.get(position));
     }
 

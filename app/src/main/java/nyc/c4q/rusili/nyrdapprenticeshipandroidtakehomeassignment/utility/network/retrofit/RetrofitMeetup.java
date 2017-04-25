@@ -1,6 +1,5 @@
 package nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.retrofit;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -16,14 +15,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitMeetup {
+    private static RetrofitMeetup instance = null;
     private onResponseListener onResponseListener;
     private List <Result> listofResults;
 
-    private static RetrofitMeetup instance = null;
-    protected RetrofitMeetup() {}
+    protected RetrofitMeetup () {
+    }
 
-    public static RetrofitMeetup getInstance() {
-        if(instance == null) {
+    public static RetrofitMeetup getInstance () {
+        if (instance == null) {
             instance = new RetrofitMeetup();
         }
         return instance;
@@ -33,7 +33,7 @@ public class RetrofitMeetup {
         this.onResponseListener = onResponseListenerParam;
     }
 
-    public void getEvents (final RecyclerView recyclerviewEvents) {
+    public void getEvents () {
         listofResults = new ArrayList <>();
 
         Retrofit retrofitMeetup = new Retrofit.Builder()
@@ -42,7 +42,7 @@ public class RetrofitMeetup {
                 .build();
 
         ServiceMeetup service = retrofitMeetup.create(ServiceMeetup.class);
-        Call <InitialResponse> getInitialResponse = service.getResponse(10036, Constants.Network.API_KEY);
+        Call <InitialResponse> getInitialResponse = service.getResponse(Constants.Network.ZIPCODE, Constants.Network.API_KEY);
         getInitialResponse.enqueue(new Callback <InitialResponse>() {
             @Override
             public void onResponse (Call <InitialResponse> call, Response <InitialResponse> response) {
@@ -53,8 +53,6 @@ public class RetrofitMeetup {
                     for (Result result : initialResponse.getResult()) {
                         listofResults.add(result);
                     }
-
-                    //recyclerviewEvents.setAdapter(new RecyclerviewMeetupAdapter(listofResults));
 
                     onResponseListener.giveInitialResponse(initialResponse);
                 }

@@ -1,24 +1,19 @@
 package nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.activities;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-
-import java.util.Calendar;
 
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.R;
-import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.fragments.FragmentDetailView;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.MillisecondsToDateTime;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.Result;
 
 public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder {
-    private Gson gsonConverter;
+    private InflateFragmentListener inflateFragmentListener;
+
     private Result result;
 
     private View view;
@@ -33,30 +28,18 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder {
         setOnClickListeners();
     }
 
+    public void giveListener (InflateFragmentListener inflateFragmentListenerParam){
+        this.inflateFragmentListener = inflateFragmentListenerParam;
+    }
+
     private void setOnClickListeners () {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                inflateFragmentDetail(v);
+                inflateFragmentListener.DetailView(result);
             }
         });
     }
-
-    private void inflateFragmentDetail (View view) {
-        AppCompatActivity appCompatActivity = (AppCompatActivity) view.getContext();
-        FragmentDetailView fragmentDetailView = new FragmentDetailView();
-        Bundle bundle = new Bundle();
-        gsonConverter = new Gson();
-        String stringJson = gsonConverter.toJson(result);
-        bundle.putString("JSONResult", stringJson);
-        fragmentDetailView.setArguments(bundle);
-
-        appCompatActivity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.activitymain_container, fragmentDetailView)
-                .commit();
-    }
-
 
     private void setViews () {
         imageViewGroupPhoto = (ImageView) view.findViewById(R.id.recyclerview_viewholder_event_imageview_group);
@@ -68,28 +51,14 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder {
         this.result = resultParam;
 
         setGroupPhoto(result);
-        String locationDate = getLocationDate(result);
 
         textViewName.setText(result.getName());
-        textViewLocationDate.setText(locationDate);
+        textViewLocationDate.setText(Result.getLocation(resultParam) + ", " + MillisecondsToDateTime.getDate(resultParam));
     }
 
-    private String getLocationDate (Result result) {
-        String location = "TBA";
-        if (result.getVenue() != null) {
-            location = result.getVenue().getCity();
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(result.getTime());
-        String date = MillisecondsToDateTime.getDate(calendar);
-
-        return (location + ", " + date);
-    }
-
-    private void setGroupPhoto (Result result) {
-        if (result.getGroup().getGroup_photo() != null) {
-            String urlThumb = result.getGroup().getGroup_photo().getPhoto_link();
+    private void setGroupPhoto (Result resultParam) {
+        if (resultParam.getGroup().getGroup_photo() != null) {
+            String urlThumb = resultParam.getGroup().getGroup_photo().getPhoto_link();
 
             Glide.with(view.getContext())
                     .load(urlThumb)
@@ -102,5 +71,9 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder {
                     .fitCenter()
                     .into(imageViewGroupPhoto);
         }
+    }
+
+    public interface InflateFragmentListener {
+        public void DetailView(Result result);
     }
 }

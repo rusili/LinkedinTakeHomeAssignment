@@ -2,9 +2,11 @@ package nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.netwo
 
 import java.util.Calendar;
 
+import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.Result;
+
 public class MillisecondsToDateTime {
 
-    public static String getDate (Calendar calendarP) {
+    public static String getDateFromMilliseconds (Calendar calendarP) {
         int month = calendarP.get(Calendar.MONTH) + 1;      //month starts at 0
         int day = calendarP.get(Calendar.DAY_OF_MONTH);
         int year = calendarP.get(Calendar.YEAR);
@@ -14,7 +16,7 @@ public class MillisecondsToDateTime {
         return date;
     }
 
-    public static String getTime (Calendar calendarP) {
+    public static String getTimeFromMilliseconds (Calendar calendarP) {
         int hours = calendarP.get(Calendar.HOUR_OF_DAY);
         String minutes = String.valueOf(calendarP.get(Calendar.MINUTE));
         if (minutes.equals("0")) {
@@ -35,6 +37,24 @@ public class MillisecondsToDateTime {
         }
 
         String time = hours + ":" + minutes + AMPM;
+
+        return time;
+    }
+
+    public static String getDate (Result result){
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(result.getTime());
+        String date = MillisecondsToDateTime.getDateFromMilliseconds(calendar);
+
+        return date;
+    }
+
+    public static String getTime (Result result){
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(result.getTime());
+        String time = MillisecondsToDateTime.getTimeFromMilliseconds(calendar);
 
         return time;
     }

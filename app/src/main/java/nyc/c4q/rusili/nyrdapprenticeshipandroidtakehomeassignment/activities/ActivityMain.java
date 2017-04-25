@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +30,6 @@ public class ActivityMain extends AppCompatActivity {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerviewEvents;
-    private RecyclerviewMeetupAdapter recyclerviewMeetupAdapter;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class ActivityMain extends AppCompatActivity {
         String jsonString = savedInstanceState.getString("JSONResponse");
         initialResponseSavedInstanceState = gsonConverter.fromJson(jsonString, InitialResponse.class);
 
-        setRecyclerviewMeetupAdapter(parseInitialResponse(initialResponseSavedInstanceState));
+        updateRecyclerviewMeetupAdapter(parseInitialResponse(initialResponseSavedInstanceState));
     }
 
     private void setViews () {
@@ -72,29 +72,54 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void getMeetupInfo () {
+        RetrofitMeetup retrofitMeetup = createRetrofitSingleton();
+        retrofitMeetup.getEvents();
+    }
+
+    @NonNull
+    private RetrofitMeetup createRetrofitSingleton () {
         RetrofitMeetup retrofitMeetup = RetrofitMeetup.getInstance();
         retrofitMeetup.GiveListener(new RetrofitMeetup.onResponseListener() {
             @Override
             public void giveInitialResponse (InitialResponse initialResponseParam) {
                 initialResponseSavedInstanceState = initialResponseParam;
-                setRecyclerviewMeetupAdapter(parseInitialResponse(initialResponseParam));
+                updateRecyclerviewMeetupAdapter(parseInitialResponse(initialResponseParam));
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        retrofitMeetup.getEvents(recyclerviewEvents);
+        return retrofitMeetup;
     }
 
-    private List<Result> parseInitialResponse (InitialResponse initialResponseParam) {
-        List<Result> listOfResults = new ArrayList <>();
+    private List <Result> parseInitialResponse (InitialResponse initialResponseParam) {
+        List <Result> listOfResults = new ArrayList <>();
 
         for (Result result : initialResponseParam.getResult()) {
             listOfResults.add(result);
         }
-        return  listOfResults;
+        return listOfResults;
     }
 
-    private void setRecyclerviewMeetupAdapter(List<Result> listOfResultsParam){
-        recyclerviewEvents.setAdapter(new RecyclerviewMeetupAdapter(listOfResultsParam));
+    private void updateRecyclerviewMeetupAdapter (List <Result> listOfResultsParam) {
+        recyclerviewEvents.setAdapter(new RecyclerviewMeetupAdapter(listOfResultsParam, new RecyclerviewMeetupViewholder.InflateFragmentListener() {
+            @Override
+            public void DetailView (Result result) {
+                inflateFragmentDetailView(result);
+            }
+        }));
+    }
+
+    private void inflateFragmentDetailView(Result result){
+        FragmentDetailView fragmentDetailView = new FragmentDetailView();
+        Bundle bundle = new Bundle();
+        gsonConverter = new Gson();
+        String stringJson = gsonConverter.toJson(result);
+        bundle.putString("JSONResult", stringJson);
+        fragmentDetailView.setArguments(bundle);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.activitymain_container, fragmentDetailView)
+                .commit();
     }
 
     private void isConnectedToInternet () {

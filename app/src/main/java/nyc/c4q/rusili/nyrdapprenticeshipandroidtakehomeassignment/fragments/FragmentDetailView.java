@@ -13,8 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
-import java.util.Calendar;
-
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.R;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.MillisecondsToDateTime;
 import nyc.c4q.rusili.nyrdapprenticeshipandroidtakehomeassignment.utility.network.models.Result;
@@ -49,7 +47,7 @@ public class FragmentDetailView extends Fragment {
 
     private void initialize () {
         setViews();
-        showResult(result);
+        showDetailedEvent(result);
     }
 
     private void setViews () {
@@ -60,17 +58,13 @@ public class FragmentDetailView extends Fragment {
         webViewDescription = (WebView) view.findViewById(R.id.fragment_detailview_webview_description);
     }
 
-    private void showResult (Result resultParam) {
+    private void showDetailedEvent (Result resultParam) {
         setGroupPhoto(resultParam);
         setWebView(resultParam);
         textViewEventName.setText(resultParam.getName());
-        if (result.getVenue() != null) {
-            textViewTimeVenue.setText(getLocationDate(resultParam));
-            textViewAddress.setText(resultParam.getVenue().getAddress());
-        } else {
-            textViewTimeVenue.setText("TBA");
-            textViewAddress.setText("TBA");
-        }
+        textViewTimeVenue.setText("TBA");
+        textViewAddress.setText(Result.getVenue(resultParam));
+        textViewTimeVenue.setText(Result.getLocation(resultParam) + ", " + MillisecondsToDateTime.getTime(resultParam));
     }
 
     private void setGroupPhoto (Result result) {
@@ -91,21 +85,7 @@ public class FragmentDetailView extends Fragment {
     }
 
     private void setWebView (Result resultParam) {
-        String description = resultParam.getDescription();
-        webViewDescription.loadData(description, "text/html", null);
-    }
-
-    private String getLocationDate (Result result) {
-        String venue = "TBA";
-        if (result.getVenue() != null) {
-            venue = result.getVenue().getName();
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(result.getTime());
-        String time = MillisecondsToDateTime.getTime(calendar);
-
-        return (time + ", " + venue);
+        webViewDescription.loadData(resultParam.getDescription(), "text/html", null);
     }
 
     @Override

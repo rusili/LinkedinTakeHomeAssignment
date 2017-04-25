@@ -29,4 +29,20 @@ public class Result {
     public Venue getVenue () {
         return venue;
     }
+
+    public static String getLocation(Result result){
+        String location = "TBA";
+        if (result.getVenue() != null){
+            location = result.getVenue().getCity();
+        }
+        return location;
+    }
+
+    public static String getVenue(Result result){
+        String venue = "TBA";
+        if (result.getVenue() != null){
+            venue = result.getVenue().getAddress();
+        }
+        return venue;
+    }
 }
