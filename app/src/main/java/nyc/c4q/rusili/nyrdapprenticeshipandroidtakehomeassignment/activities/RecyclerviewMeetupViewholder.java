@@ -28,7 +28,7 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder {
         setOnClickListeners();
     }
 
-    public void giveListener (InflateFragmentListener inflateFragmentListenerParam){
+    public void giveListener (InflateFragmentListener inflateFragmentListenerParam) {
         this.inflateFragmentListener = inflateFragmentListenerParam;
     }
 
@@ -74,6 +74,6 @@ public class RecyclerviewMeetupViewholder extends RecyclerView.ViewHolder {
     }
 
     public interface InflateFragmentListener {
-        public void DetailView(Result result);
+        void DetailView (Result result);
     }
 }

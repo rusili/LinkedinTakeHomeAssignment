@@ -7,14 +7,13 @@
     <dimen name="viewholder_event_height">72dp</dimen>
     <dimen name="viewholder_image_width">56dp</dimen>
     <dimen name="viewholder_padding_leftright">16dp</dimen>
-    <dimen name="viewholder_padding_topbottom">4dp</dimen>
+    <dimen name="viewholder_padding_topbottom">20dp</dimen>
 
     <dimen name="viewholder_padding_textview_left">16dp</dimen>
-    <dimen name="padding_betweenlistitems">2dp</dimen>
     <dimen name="Cardview_elevation">2dp</dimen>
 
-    <dimen name="viewholder_textview_primary_height">34dp</dimen>
-    <dimen name="viewholder_textview_secondary_height">30dp</dimen>
+    <dimen name="viewholder_textview_primary_height">20dp</dimen>
+    <dimen name="viewholder_textview_secondary_height">18dp</dimen>
     <dimen name="viewholder_primary_fontsize">16sp</dimen>
     <dimen name="viewholder_secondary_fontsize">14sp</dimen>
 

@@ -60,13 +60,6 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void setViews () {
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activitymain_recyclerview_swiperefreshlayout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh () {
-                getMeetupInfo();
-            }
-        });
         recyclerviewEvents = (RecyclerView) findViewById(R.id.activitymain_recyclerview_events);
         recyclerviewEvents.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -84,7 +77,6 @@ public class ActivityMain extends AppCompatActivity {
             public void giveInitialResponse (InitialResponse initialResponseParam) {
                 initialResponseSavedInstanceState = initialResponseParam;
                 updateRecyclerviewMeetupAdapter(parseInitialResponse(initialResponseParam));
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
         return retrofitMeetup;
@@ -108,7 +100,7 @@ public class ActivityMain extends AppCompatActivity {
         }));
     }
 
-    private void inflateFragmentDetailView(Result result){
+    private void inflateFragmentDetailView (Result result) {
         FragmentDetailView fragmentDetailView = new FragmentDetailView();
         Bundle bundle = new Bundle();
         gsonConverter = new Gson();

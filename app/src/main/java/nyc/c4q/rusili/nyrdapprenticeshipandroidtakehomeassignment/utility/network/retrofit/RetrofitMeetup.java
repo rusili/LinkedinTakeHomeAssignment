@@ -66,6 +66,6 @@ public class RetrofitMeetup {
     }
 
     public interface onResponseListener {
-        public void giveInitialResponse (InitialResponse initialResponse);
+        void giveInitialResponse (InitialResponse initialResponse);
     }
 }
